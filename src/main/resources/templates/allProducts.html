@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<title>Basketball Shop</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<body>
+	<nav class="navbar navbar-expand navbar-dark bg-dark">
+		<a class="navbar-brand">BasketBall Shop</a>
+		<div class="collapse navbar-collapse justify-content-between"
+			id="navbarsExample02">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/allProducts">Products</a></li>
+				<li class="nav-item"><a class="nav-link" href="/myProfile">My Profile</a></li>
+				<li class="nav-item"><a class="nav-link" href="/shoppingCart/cart">Shopping Cart</a></li>
+			</ul>
+			<form th:action="@{/logout}" method="POST">
+				<input type="submit" class="nav-link" value="Logout" />
+			</form>
+			
+		</div>
+	</nav>
+	
+	<div class="row" style="margin-top: 60px;">
+		<div class="col-xs-3">
+			<h3><label for="category">Category</label></h3>
+			<div class="list-group" id="category">
+				<a th:href="@{allProducts(category='all')}" th:classappend="${activeAll}? 'active'" class="list-group-item">All</a>
+				<a th:href="@{searchByCategory(category='Shirt')}" th:classappend="${activeShirt}? 'active'" class="list-group-item">T-shirts</a>
+				<a th:href="@{searchByCategory(category='Jersey')}" th:classappend="${activeJersey}? 'active'" class="list-group-item">Jerseys</a>
+				<a th:href="@{searchByCategory(category='Pants')}" th:classappend="${activePants}? 'active'" class="list-group-item">Pants</a>
+				<a th:href="@{searchByCategory(category='Shorts')}" th:classappend="${activeShorts}? 'active'" class="list-group-item">Shorts</a>
+			</div>
+		</div>
+		<div class="col-xs-9">
+			<div th:if="${emptyList}">
+				<h5>No result is found. Try again later.</h5>
+			</div>
+			
+			<table border="0" id="productList">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="product-item" data-th-each="product : ${productList}">
+						<td>
+							<div th:if="${product != null}">
+								<div class="row">
+									<div class="col-xs-3">
+										<a th:href="@{/productDetail?id=}+${product.id}"><img style="width:100px;height:100px;" class="img-responsive product" th:src="@{/image/product/}+${product.id}+'.png'"/></a>
+									</div>
+									<div class="col-xs-9">
+										<a th:href="@{/productDetail?id=}+${product.id}"><h4 th:text="${product.name}"></h4></a>
+										<span>Price: $</span><span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
+										
+										<p th:if="${product.inStockNumber&gt;0}" style="color:green;"><span th:text="${product.inStockNumber}"></span> In Stock</p>
+										<p th:if="${product.inStockNumber==0}" style="color:red;">Product Unavailable</p>
+										
+										<p th:text="${#strings.abbreviate(product.description, 500)}"></p>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		
+		</div>
+	
+	
+	</div>
+
+	<div th:fragment="body-bottom-scripts">
+		<script th:src="@{/js/jquery.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		
+		
+		<script th:src="@{/js/jquery.dataTables.min.js}"></script>
+		<script th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+	</div>
+	
+	<script>
+		$(document).ready(function() {
+			$('#productList').DataTable({
+				"lengthMenu":[
+					[5,10,-1],[5,10,"ALL"]
+				],
+				"ordering":false,
+				stateSave:true
+			})
+		});
+		
+		$('#productList').on('page.dt', function() {
+			$('html, body').animate({
+				scrollTop: $('#bookList').offset().top
+			})
+		})
+	</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

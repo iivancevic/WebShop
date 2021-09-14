@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<title>Admin</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+<body>
+	<nav class="navbar navbar-expand navbar-dark bg-dark">
+		<a class="navbar-brand">BasketBall Shop</a>
+		<div class="collapse navbar-collapse justify-content-between"
+			id="navbarsExample02">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/admin/addProduct">Add
+						a new product</a></li>
+				<li class="nav-item"><a class="nav-link" href="/admin/productList">View
+						product list</a></li>
+			</ul>
+			<form th:action="@{/logout}" method="POST">
+				<input type="submit" class="nav-link" value="Logout" />
+			</form>
+
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row"></div>
+		<form class="form-horizontal" th:action="@{/admin/addProduct}" method="POST" enctype="multipart/form-data">
+		<fieldset>
+			<legend class="center-block">New Product Information<span style="font-size:small">* is required</span></legend>
+			
+			<div class="form-group">
+				<label for="name">* Name</label> 
+				<input
+					type="text" class="form-control" id="name" name="name" th:value="${product.name}" required="required"
+					placeholder="Name" />
+			</div>
+			
+			<div class="form-group">
+				<label for="description">* Description</label> 
+				<input
+					type="text" class="form-control" id="description" name="description" th:value="${product.description}" required="required"
+					placeholder="Description" />
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-2 control-label" for="category">* Category</label>
+				<div class="col-xs-8">
+					<select th:value="${product.category}" id="category" name="category" class="form-control">
+						<option value="Shirt">T-shirt</option>
+						<option value="Jersey">Jersey</option>
+						<option value="Pants">Pants</option>
+						<option value="Shorts">Shorts</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-2 control-label" for="listPrice">* Price</label>
+				<div class="col-xs-8">
+					<div class="input-group">
+							<input th:value="${product.price}" type="number" name="price" step="0.01" class="form-control" id="price" placeholder="Price" />
+							<span class="input-group-addon">$</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-2 control-label" for="inStockNumber">* Number in stock</label>
+				<div class="col-xs-8">
+					<div class="input-group">
+						<input th:value="${product.inStockNumber}" type="number" name="inStockNumber" class="form-control" id="inStockNumber" placeholder="Number of in-stock products" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-2 control-label" for="status">Status</label>
+				<div class="col-xs-8">
+					<label><input type="radio" value="true" name="active" checked="checked"/> Active </label>
+					<label><input type="radio" value="false" name="active" /> Inactive </label>
+				</div>
+			</div>
+			
+			
+			<div class="form-group">
+				<div class="col-xs-2">
+					<label for="productImage">* Upload product image</label>
+				</div>
+				<div class="col-xs-8">
+					<input id="productImage" type="file" name="productImage" th:value="${product.productImage}" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<a class="btn btn-danger" th:href="@{/admin}">Cancel</a>
+			</div>
+			</fieldset>
+		</form>
+	</div>
+
+
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="../../assets/js/vendor/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

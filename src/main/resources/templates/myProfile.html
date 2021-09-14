@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<title>Basketball Shop</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+<body>
+	<nav class="navbar navbar-expand navbar-dark bg-dark">
+		<a class="navbar-brand">BasketBall Shop</a>
+		<div class="collapse navbar-collapse justify-content-between"
+			id="navbarsExample02">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/allProducts">Products</a></li>
+				<li class="nav-item"><a class="nav-link" href="/myProfile">My Profile</a></li>
+				<li class="nav-item"><a class="nav-link" href="/shoppingCart/cart">Shopping Cart</a></li>
+			</ul>
+			<form th:action="@{/logout}" method="POST">
+				<input type="submit" class="nav-link" value="Logout" />
+			</form>
+			
+		</div>
+	</nav>
+	
+	<div class="row">
+		<div class="col-xs-2">
+			<h5>Hello <span th:text="${user.firstName}"></span>, welcome to your Profile page.</h5>
+		</div>
+		<div class="col-xs-4">
+			<div>
+				<p>Name: <span th:text="${user.firstName}"></span></p>
+				<p>Last Name: <span th:text="${user.lastName}"></span></p>
+				<p>Username: <span th:text="${user.userName}"></span></p>
+				<p>Email: <span th:text="${user.email}"></span></p>
+			</div>
+		</div>
+		<h4>Your orders: </h4>
+		<div class="col-xs-6">
+			<div th:each="order : ${orderList}">
+				<p><strong>Date: </strong><span th:text="${order.orderDate}"></span> 
+				<strong>Shipping Address: </strong><span th:text="${order.shippingAddress}"></span> 
+				<strong>Total: </strong><span th:text="${order.orderTotal}"></span>$</p>
+				<h3>Items: </h3>
+				<div th:each="cartItem : ${order.cartItemList}">
+					<a th:href="@{/productDetail(id=${cartItem.product.id})}">
+					<p>Name: <span th:text="${cartItem.product.name}"></span></p></a>
+					<p>Size: <span th:text="${cartItem.itemSize}"></span></p>
+					<p>Price: <span th:text="${cartItem.product.price}"></span>$</p>
+					<p>Quantity: <span th:text="${cartItem.qty}"></span></p>
+				</div>
+				<hr/>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="../../assets/js/vendor/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
